@@ -9,14 +9,23 @@
 #include <dt-bindings/zmk/outputs.h>
 
 / {
+    macros {
+        // Macro để thực hiện lệnh xóa/ngắt kết nối Bluetooth
+        bt_clear: bt_clear {
+            compatible = "zmk,behavior-macro";
+            #binding-cells = <0>;
+            bindings = <&bt BT_CLR>;
+        };
+    };
+
     behaviors {
-        // Nút phụ 1: Nhấn nhanh không làm gì, giữ 5s (5000ms) để ngắt/xóa kết nối Bluetooth
+        // Nút phụ 1: Nhấn nhanh không làm gì, giữ 5s (5000ms) để xóa/ngắt kết nối Bluetooth
         bt_ht: bt_hold_tap {
             compatible = "zmk,behavior-hold-tap";
             #binding-cells = <2>;
             flavor = "hold-preferred";
             tapping-term-ms = <5000>;
-            bindings = <&bt>, <&none>;
+            bindings = <&bt_clear>, <&none>;
         };
 
         // Giữ combo cả 2 nút phụ 5s (5000ms) để khởi động lại (reboot) mạch
@@ -25,7 +34,7 @@
             #binding-cells = <2>;
             flavor = "hold-preferred";
             tapping-term-ms = <5000>;
-            bindings = <&bootloader>, <&none>;
+            bindings = <&sys_reset>, <&none>;
         };
     };
 
@@ -48,7 +57,7 @@
             bindings = <
                 &kp LC(C)    &kp LC(C)    &kp LC(C)
                 &kp LC(C)    &kp LC(C)    &kp LC(C)
-                &bt_ht BT_CLR 0
+                &bt_ht 0 0
                 &tog 1
                 &kp C_MUTE
             >;
