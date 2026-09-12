@@ -1,0 +1,6 @@
+if SHIELD_BUNSUONKHONGHANH
+
+config ZMK_KEYBOARD_NAME
+    default "Bunsuonkhonghanh"
+
+endif
